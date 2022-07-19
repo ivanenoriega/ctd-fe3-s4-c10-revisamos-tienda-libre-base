@@ -4,22 +4,11 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Product, ProductsAPIResponse } from "../types";
 
-// Por ahora estamos utilizando data mockeada, pero
-// debemos reemplazar esto por información proveniente de la
-// API
-export const data: ProductsAPIResponse = [
-  {
-    id: 1,
-    title: "Mochila con correas",
-    price: 7500,
-    description:
-      "Tu mochila perfecta para el dìa a dìa y salidas de fin de semana. Guarda tu notebook (hasta 15 pulgadas) en la funda acolchada, y protégela de los rayones y golpes",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    rating: 4,
-  },
-];
+type IProps = {
+  data: ProductsAPIResponse;
+};
 
-const Home: NextPage = () => {
+const Home: NextPage<IProps> = ({ data }) => {
   if (!data) return null;
 
   const formatPrice: (price: number) => string = (price) =>
@@ -95,7 +84,16 @@ const Home: NextPage = () => {
   );
 };
 
-// Aquí debemos agregar el método para obtener la información
-// de la API
+export async function getServerSideProps() {
+  const baseUrl = "http://localhost:3000/"; // Cambiar por la url del proyecto una vez deployada la API
+
+  const response = await fetch(`${baseUrl}/api/products`);
+
+  const data = await response.json();
+
+  return {
+    props: { data },
+  };
+}
 
 export default Home;
