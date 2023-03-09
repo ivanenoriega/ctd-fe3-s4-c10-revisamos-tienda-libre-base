@@ -18,16 +18,16 @@ const Home: NextPage<IProps> = ({ data }) => {
     rating: number,
     maxStars?: number
   ) => JSX.Element[] = (rating, maxStars = 5) =>
-    Array.from({ length: maxStars }).map((_, index) => (
-      <Image
-        key={index}
-        alt={index <= rating ? "yellow star" : "empty star"}
-        src={index <= rating ? "/yellowStar.png" : "/emptyStar.png"}
-        layout="fixed"
-        width={20}
-        height={20}
-      />
-    ));
+      Array.from({ length: maxStars }).map((_, index) => (
+        <Image
+          key={index}
+          alt={index <= rating ? "yellow star" : "empty star"}
+          src={index <= rating ? "/yellowStar.png" : "/emptyStar.png"}
+          layout="fixed"
+          width={20}
+          height={20}
+        />
+      ));
 
   const renderProductCard: (product: Product) => JSX.Element = ({
     id,
@@ -84,10 +84,10 @@ const Home: NextPage<IProps> = ({ data }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const baseUrl = "http://localhost:3000/"; // Cambiar por la url del proyecto una vez deployada la API
 
-  const response = await fetch(`${baseUrl}/api/products`);
+  const response = await fetch(`${baseUrl}/api/products/${context.locale}`);
 
   const data = await response.json();
 

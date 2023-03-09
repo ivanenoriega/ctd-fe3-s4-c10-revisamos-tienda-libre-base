@@ -2,7 +2,7 @@ const EN_US = "en-US";
 const ES_ES = "es-ES";
 const PT_BR = "pt-BR";
 
-export const defaultLocale = ES_ES;
+export const defaultLocale = EN_US;
 export const locales = {
   EN_US,
   ES_ES,
